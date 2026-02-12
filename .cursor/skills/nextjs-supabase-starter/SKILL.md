@@ -13,9 +13,9 @@ Apply these rules when implementing or modifying the starter app. Names for rout
 
 - **Version**: Use the latest Next.js; follow Next.js 13+ App Router conventions.
 - **App Router only**: Use the `app/` directory; do not use `pages/`.
-- **TypeScript**: Use TypeScript throughout; no `any` without justification.
+- **TypeScript**: Use TypeScript throughout; no `any` without justification. Use explicit semicolons at the end of statements in `.ts` and `.tsx` files.
 - **Project structure**: Organize with `app/`, `components/`, `lib/`, etc. Document structure and conventions in README.
-- **Styling**: Use Tailwind CSS primarily, and plain CSS if n
+- **Styling**: Use Tailwind CSS primarily, and plain CSS if needed.
 - **Middleware**: Use Next.js middleware for Supabase token refresh; implement the refresh logic in `proxy.ts` and use it from `middleware.ts` (see Supabase section).
 - **Server vs client**: Prefer Server Components by default; add `'use client'` only where needed (e.g. forms, auth state in UI). Colocate route-specific components in route folders when it makes sense.
 - **UX**: Use `loading.tsx` and `error.tsx` in route segments for loading and error states where appropriate.
@@ -111,9 +111,12 @@ Route names are flexible (e.g. `/auth/login`, `/account`); keep them logical and
 
 ## 9. Testing
 
-- **Framework**: Set up a unit testing framework (e.g. Jest, Vitest).
-- **Examples**: Include at least a few example tests that demonstrate how to test React components, utility functions, and authentication-related code.
-- **README**: Include instructions on how to run tests and how to add new tests.
+- **Framework**: Use a unit test framework (e.g. Jest, Vitest).
+- **Coverage**: Include at least a few examples for:
+  - React components
+  - Utility functions
+  - Auth-related code
+- **README**: How to run tests and how to add new tests.
 
 ---
 
