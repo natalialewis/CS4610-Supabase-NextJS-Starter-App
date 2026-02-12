@@ -22,8 +22,7 @@ This document is the implementation plan for the assignment. Save it as a markdo
 - **Server:** e.g. `lib/supabase/server.ts` — create Supabase client for server components (cookies).
 - **Client:** e.g. `lib/supabase/client.ts` — create browser client for client components.
 - **Middleware + proxy:** Implement token refresh:
-- Put session refresh / proxy logic in **`proxy.ts`** (e.g. under `lib/supabase/` or root).
-- In **`middleware.ts`** at project root, import and run that logic so the session is updated on each request.
+- Put session refresh / proxy logic in **`proxy.ts`** at the root; Document which paths are safe from redirect to login in README.
 - **Env:** Require `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`. Document in README; ensure `.env.local` is in `.gitignore` (already covered by [.gitignore](.gitignore) `.env*`).
 
 ---
