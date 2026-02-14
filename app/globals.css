@@ -1,26 +1,140 @@
-@import "tailwindcss";
+/* =============================================================================
+   TAILWIND v4 – What goes where
+   - @import / @config: load Tailwind and optional JS config (content/plugins only).
+   - @theme: design tokens that generate utilities (bg-*, text-*, font-*). All
+     theme (colors, fonts) belongs HERE, not in tailwind.config.ts.
+   - :root / .dark: your app’s CSS variables; @theme maps these into Tailwind.
+   - body: base styles (background, color, font).
+   ============================================================================= */
 
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+/* Light theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8fc;
+  --foreground: #2d2d30;
+  --card: #ffffff;
+  --card-foreground: #2d2d30;
+  --muted: #f3eff8;
+  --muted-foreground: #52525b;
+  --border: #d4d0dc;
+  --ring: #9b59b6;
+
+  /* Medium charcoal – secondary text, borders, neutral accents */
+  --charcoal: #52525b;
+  --charcoal-muted: #71717a;
+
+  /* Primary (≥4.5:1 on white for text, white on this for buttons) */
+  --primary: #9b59b6;
+  --primary-foreground: #ffffff;
+  --primary-hover: #8e44ad;
+  --primary-muted: #f0e6f5;
+  --primary-muted-foreground: #6b2d85;
+
+  /* Accent */
+  --accent: #a066b8;
+  --accent-foreground: #ffffff;
+  --accent-muted: #f0e6f5;
+
+  /* Semantic */
+  --destructive: #c4077b;
+  --destructive-foreground: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark theme */
+.dark {
+  --background: #100f14;
+  --foreground: #e4e2e9;
+  --card: #18161d;
+  --card-foreground: #e4e2e9;
+  --muted: #25222c;
+  --muted-foreground: #a1a1aa;
+  --border: #3f3d48;
+  --ring: #af7ac5;
+
+  /* Charcoal – borders and secondary */
+  --charcoal: #686868;
+  --charcoal-muted: #797979;
+  --primary: #c39bd4;
+  --primary-foreground: #100f14;
+  --primary-hover: #d4b8e0;
+  --primary-muted: #2d2238;
+  --primary-muted-foreground: #d4b8e0;
+
+  /* Accent */
+  --accent: #af7ac5;
+  --accent-foreground: #100f14;
+  --accent-muted: #2d2238;
+  --destructive: #c4077b;
+  --destructive-foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not(.light) {
+    --background: #100f14;
+    --foreground: #e4e2e9;
+    --card: #18161d;
+    --card-foreground: #e4e2e9;
+    --muted: #25222c;
+    --muted-foreground: #a1a1aa;
+    --border: #3f3d48;
+    --ring: #af7ac5;
+    --charcoal: #a1a1aa;
+    --charcoal-muted: #71717a;
+    --primary: #c39bd4;
+    --primary-foreground: #100f14;
+    --primary-hover: #d4b8e0;
+    --primary-muted: #2d2238;
+    --primary-muted-foreground: #d4b8e0;
+    --accent: #af7ac5;
+    --accent-foreground: #100f14;
+    --accent-muted: #2d2238;
+    --destructive: #c4077b;
+    --destructive-foreground: #ffffff;
   }
 }
 
+/* Force light when .light is on html (for toggle) */
+html.light {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+/* Tailwind theme – map CSS variables to utilities */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-muted: var(--charcoal-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-muted: var(--primary-muted);
+  --color-primary-muted-foreground: var(--primary-muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-muted: var(--accent-muted);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* Base */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
