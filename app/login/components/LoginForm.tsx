@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { type SubmitEvent, useState } from "react";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { useLogin } from "@/lib/hooks/useLogin";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, isLoading, error } = useLogin();
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: wire to Supabase sign in
+    await login({ email: email.trim(), password });
   }
 
   return (
@@ -29,7 +31,7 @@ export function LoginForm() {
           placeholder="you@example.com"
           required
           aria-required="true"
-          aria-invalid={false}
+          aria-invalid={error === "Email is required."}
         />
       </div>
       <div>
@@ -44,17 +46,19 @@ export function LoginForm() {
           className="mt-1 px-3"
           required
           aria-required="true"
-          aria-invalid={false}
+          aria-invalid={error === "Password is required."}
         />
       </div>
+      {/* Error display */}
       <div role="alert" aria-live="polite" className="min-h-[1.5rem] text-sm text-destructive">
-        {/* Error message will be shown here when auth is implemented */}
+        {error}
       </div>
       <button
         type="submit"
+        disabled={isLoading}
         className="w-full min-h-[2.75rem] rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 md:min-h-0 md:py-3 md:text-base"
       >
-        Log in
+        {isLoading ? "Signing in…" : "Log in"}
       </button>
       <p className="text-center text-sm text-muted-foreground md:text-base">
         Don&apos;t have an account?{" "}
