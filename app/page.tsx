@@ -1,14 +1,16 @@
 import Link from "next/link";
+import { createSupabaseClient } from "@/lib/supabase/server";
 
-// Placeholder for authentication status
-const user = false;
+export default async function HomePage() {
+  // See if the user is authenticated
+  const supabase = await createSupabaseClient();
+  const { data: { user } } = await supabase.auth.getUser();
 
-export default function HomePage() {
   return (
     <div className="min-h-full bg-background px-4 py-8 sm:py-10 md:py-12">
       <main className="mx-auto w-full max-w-2xl text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          Welcome!
+          Welcome{user ? `, ${user.user_metadata?.first_name} ${user.user_metadata?.last_name}` : ""}!
         </h1>
         <p className="mt-4 text-base text-muted-foreground sm:mt-6 sm:text-lg">
           This is your Next.js and Supabase starter app.
