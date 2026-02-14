@@ -18,6 +18,8 @@ const PASSWORD_ERROR =
   "Password must be at least 8 characters long and include at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.";
 
 export function SignupForm() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,6 +27,20 @@ export function SignupForm() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    const trimmedFirst = firstName.trim();
+    if (!trimmedFirst) {
+      setError("First name is required.");
+      return;
+    }
+    const trimmedLast = lastName.trim();
+    if (!trimmedLast) {
+      setError("Last name is required.");
+      return;
+    }
+    if (!email.trim()) {
+      setError("Email is required.");
+      return;
+    }
     if (!validatePassword(password)) {
       setError(PASSWORD_ERROR);
       return;
@@ -34,6 +50,35 @@ export function SignupForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-5 space-y-4 sm:mt-6 sm:space-y-4 md:mt-8 md:space-y-5" noValidate>
+      <div>
+        <label htmlFor="signup-first-name" className="block text-sm font-medium text-foreground md:text-base">
+          First name
+        </label>
+        <input
+          id="signup-first-name"
+          type="text"
+          autoComplete="given-name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className="mt-1 block w-full min-w-0 rounded-lg border border-border bg-background px-3 py-2.5 text-base text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring md:py-3"
+          required
+          aria-required="true"
+          aria-invalid={error === "First name is required."}
+        />
+      </div>
+      <div>
+        <label htmlFor="signup-last-name" className="block text-sm font-medium text-foreground md:text-base">
+          Last name
+        </label>
+        <input
+          id="signup-last-name"
+          type="text"
+          autoComplete="family-name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className="mt-1 block w-full min-w-0 rounded-lg border border-border bg-background px-3 py-2.5 text-base text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring md:py-3"
+        />
+      </div>
       <div>
         <label htmlFor="signup-email" className="block text-sm font-medium text-foreground md:text-base">
           Email
