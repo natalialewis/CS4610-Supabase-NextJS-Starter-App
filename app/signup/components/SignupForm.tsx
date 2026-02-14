@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { type SubmitEvent, useState } from "react";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useSignUp } from "@/lib/hooks/useSignUp";
 
@@ -26,7 +26,7 @@ export function SignupForm() {
   const [validationError, setValidationError] = useState("");
   const { signUp, isLoading, error: signUpError } = useSignUp();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     // Clear any previous validation errors
