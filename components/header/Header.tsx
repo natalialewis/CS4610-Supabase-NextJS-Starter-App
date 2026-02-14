@@ -13,7 +13,7 @@ export function Header() {
         {/* Logo and name */}
         <Link
           href="/"
-          className="flex items-center gap-2 font-semibold text-foreground hover:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background rounded"
+          className="flex items-center gap-2 rounded font-semibold text-foreground hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <Image
             src="/logo.png"
