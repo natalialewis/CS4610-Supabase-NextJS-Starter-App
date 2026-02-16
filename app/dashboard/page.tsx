@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { createSupabaseClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 import { LogoutButton } from "@/components/auth/LogoutButton";
 
 export default async function DashboardPage() {
-  // See if the user is authenticated and use their first name
-  const supabase = await createSupabaseClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   return (
     <div className="min-h-full bg-background px-4 py-8 sm:py-10 md:py-12">

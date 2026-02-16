@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { createSupabaseClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
 
 export default async function HomePage() {
-  // See if the user is authenticated
-  const supabase = await createSupabaseClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
 
   return (
     <div className="min-h-full bg-background px-4 py-8 sm:py-10 md:py-12">
