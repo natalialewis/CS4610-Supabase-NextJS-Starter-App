@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createSupabaseClient } from "@/lib/supabase/server";
+import { LogoutButton } from "@/components/auth/LogoutButton";
 
 export default async function DashboardPage() {
   // See if the user is authenticated and use their first name
@@ -15,14 +16,14 @@ export default async function DashboardPage() {
         <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base md:text-lg">
           This is a protected page, accessible only to logged-in users.
         </p>
-        <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base md:text-lg">
-          Because you are logged in, your information is accessible:
+        <div className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base md:text-lg">
+          <p>Because you are logged in, your information is accessible:</p>
           <ul className="list-disc list-inside mt-2">
             <li><span className="font-bold">Email:</span> {user?.email}</li>
             <li><span className="font-bold">First Name:</span> {user?.user_metadata?.first_name}</li>
             <li><span className="font-bold">Last Name:</span> {user?.user_metadata?.last_name}</li>
           </ul>
-        </p>
+        </div>
         <p className="mt-2 text-sm text-muted-foreground sm:mt-3 sm:text-base md:text-lg">
           You can navigate to your profile or sign out by clicking the profile icon in the top-right corner.
           For convenience, these links are also available here.
@@ -40,12 +41,7 @@ export default async function DashboardPage() {
           >
             Home
           </Link>
-          <Link
-            href="/signout"
-            className="min-h-[2.75rem] rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background md:py-3 md:text-base"
-          >
-            Log Out
-          </Link>
+          <LogoutButton />
         </nav>
       </main>
     </div>
