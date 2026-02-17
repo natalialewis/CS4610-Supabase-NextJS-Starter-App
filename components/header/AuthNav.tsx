@@ -79,7 +79,7 @@ export function AuthNav() {
               openedByKeyboardRef.current = false;
             }
           }}
-          className="flex h-9 w-9 min-w-[2.25rem] items-center justify-center overflow-hidden rounded-full border-2 border-charcoal-muted bg-muted transition-transform duration-150 ease-out active:scale-95 ring-offset-2 ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-w-0"
+          className="flex h-9 w-9 min-w-[2.25rem] items-center justify-center overflow-hidden rounded-full border-1 border-charcoal-muted bg-muted transition-transform duration-150 ease-out active:scale-95 ring-offset-2 ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-w-0"
           aria-expanded={dropdownOpen}
           aria-haspopup="true"
           aria-controls="user-menu"
