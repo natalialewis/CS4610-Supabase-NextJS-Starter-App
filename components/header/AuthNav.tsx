@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useLogout } from "@/lib/hooks/useLogout";
+import { useProfile } from "@/lib/hooks/useProfile";
 
 export function AuthNav() {
   const { user: authUser, loading } = useAuth();
+  const { profile } = useProfile();
   const { logout } = useLogout();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -49,11 +51,15 @@ export function AuthNav() {
     openedByKeyboardRef.current = false;
   }, [dropdownOpen]);
 
-  // Will eventually get the user's name and avatar from the database, but for now, use the user's metadata
-  const user = authUser ? {
-    firstName: (authUser.user_metadata?.first_name as string) ?? undefined,
-    avatarUrl: (authUser.user_metadata?.avatar_url as string) ?? undefined,
-  } : null;
+  const user = authUser
+    ? {
+        firstName:
+          profile?.first_name ??
+          (authUser.user_metadata?.first_name as string) ??
+          "",
+        avatarUrl: profile?.avatar_url ?? undefined,
+      }
+    : null;
 
   if (loading) {
     return (
@@ -98,7 +104,7 @@ export function AuthNav() {
               className="flex h-full w-full items-center justify-center text-sm font-medium text-muted-foreground"
               aria-hidden
             >
-              {user.firstName.charAt(0).toUpperCase()}
+              {user.firstName ? user.firstName.charAt(0).toUpperCase() : "?"}
             </span>
           )}
         </button>
