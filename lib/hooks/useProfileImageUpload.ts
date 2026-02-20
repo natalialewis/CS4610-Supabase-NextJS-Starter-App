@@ -20,6 +20,7 @@ export function useProfileImageUpload() {
     const router = useRouter();
     const { user } = useAuth();
     const [uploading, setUploading] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
 
@@ -72,5 +73,28 @@ export function useProfileImageUpload() {
         router.refresh();
     }
 
-    return { upload, uploading, error, uploadedUrl };
+    async function deleteAvatar(): Promise<void> {
+        if (!user?.id) return;
+        setError(null);
+        setDeleting(true);
+        const supabase = createSupabaseClient();
+        const { data: files } = await supabase.storage.from("avatars").list(user.id);
+        if (files?.length) {
+            const paths = files.map((f) => `${user.id}/${f.name}`);
+            await supabase.storage.from("avatars").remove(paths);
+        }
+        const { error: updateError } = await supabase
+            .from("profiles")
+            .update({ avatar_url: null })
+            .eq("id", user.id);
+        setDeleting(false);
+        if (updateError) {
+            setError(updateError.message);
+            return;
+        }
+        setUploadedUrl(null);
+        router.refresh();
+    }
+
+    return { upload, deleteAvatar, uploading, deleting, error, uploadedUrl };
 }
